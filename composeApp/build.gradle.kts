@@ -7,6 +7,7 @@ plugins {
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
     alias(libs.plugins.composeHotReload)
+    alias(libs.plugins.ksp)
 }
 
 kotlin {
@@ -42,6 +43,8 @@ kotlin {
 
             implementation(libs.androidx.navigation3.runtime)
             implementation(libs.androidx.navigation3.ui)
+
+            implementation(libs.androidx.room.runtime)
         }
 
         jvmMain.dependencies {
@@ -80,16 +83,7 @@ android {
 
 dependencies {
     debugImplementation(compose.uiTooling)
-}
-
-compose.desktop {
-    application {
-        mainClass = "com.alorma.camperrent.MainKt"
-
-        nativeDistributions {
-            targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
-            packageName = "com.alorma.camperrent"
-            packageVersion = "1.0.0"
-        }
-    }
+    add("kspCommonMainMetadata", libs.androidx.room.compiler)
+    add("kspAndroid", libs.androidx.room.compiler)
+    add("kspJvm", libs.androidx.room.compiler)
 }
