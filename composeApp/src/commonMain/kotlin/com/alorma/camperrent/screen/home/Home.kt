@@ -63,13 +63,6 @@ fun HomeScreen(
     Column(
       modifier = Modifier.fillMaxSize().padding(paddingValues),
     ) {
-      Button(
-        onClick = { viewModel.create() },
-        modifier = Modifier.padding(16.dp)
-      ) {
-        Text(text = "Add Sample Reservation")
-      }
-
       when (val state = uiState.value) {
         HomeState.Loading -> {
           Box(

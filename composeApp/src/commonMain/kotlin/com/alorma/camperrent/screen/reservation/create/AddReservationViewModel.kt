@@ -6,9 +6,15 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.alorma.camperrent.data.ReservationDao
+import com.alorma.camperrent.data.ReservationEntity
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 
-class AddReservationViewModel : ViewModel() {
+class AddReservationViewModel(
+  private val reservationDao: ReservationDao,
+) : ViewModel() {
 
   var customerName by mutableStateOf(TextFieldValue(""))
     private set
@@ -23,7 +29,11 @@ class AddReservationViewModel : ViewModel() {
   var email by mutableStateOf(TextFieldValue(""))
     private set
 
-  fun onCustomerNameChange(name: TextFieldValue) {
+
+    private var _sideEffect = Channel<AddReservationSideEffect>()
+    val sideEffect = _sideEffect.receiveAsFlow()
+
+    fun onCustomerNameChange(name: TextFieldValue) {
     customerName = name
   }
 
@@ -48,10 +58,19 @@ class AddReservationViewModel : ViewModel() {
   }
 
   fun saveReservation() {
-    // TODO: Implement actual save logic, e.g., call a repository
     viewModelScope.launch {
-      println("Saving reservation: $customerName, $checkInDate, $checkOutDate, $phone, $whatsapp, $email")
-      // Simulate network call or database operation
+      reservationDao.insert(
+        ReservationEntity(
+          customerName = customerName.text,
+          checkInDate = checkInDate.text,
+          checkOutDate = checkOutDate.text,
+          phone = phone.text,
+          whatsapp = whatsapp.text,
+          email = email.text,
+        ),
+      )
+
+        _sideEffect.send(AddReservationSideEffect.Close)
     }
   }
 }
