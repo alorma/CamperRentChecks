@@ -1,9 +1,23 @@
 package com.alorma.camperrent
 
-import android.os.Build
+import androidx.compose.material3.ColorScheme
+import androidx.compose.material3.dynamicDarkColorScheme
+import androidx.compose.material3.dynamicLightColorScheme
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.platform.LocalContext
 
 class AndroidPlatform : Platform {
-    override val name: String = "Android ${Build.VERSION.SDK_INT}"
+  @Composable
+  override fun getLightColorScheme(): ColorScheme {
+    val context = LocalContext.current
+    return dynamicDarkColorScheme(context)
+  }
+
+  @Composable
+  override fun getDarkColorScheme(): ColorScheme {
+    val context = LocalContext.current
+    return dynamicLightColorScheme(context)
+  }
 }
 
 actual fun getPlatform(): Platform = AndroidPlatform()
