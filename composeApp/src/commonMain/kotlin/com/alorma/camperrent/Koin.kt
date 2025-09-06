@@ -18,6 +18,7 @@ val appModule = module {
 
   single { getRoomDatabase(get<RoomDatabase.Builder<AppDatabase>>()) }
   single { get<AppDatabase>().getTodoDao() }
+  single { get<AppDatabase>().getReservationDao() }
 
   viewModelOf(::HomeViewModel)
 }
