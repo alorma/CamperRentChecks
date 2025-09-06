@@ -2,14 +2,14 @@ package com.alorma.camperrent.screen.reservation.create
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeContent
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.Button
@@ -21,14 +21,14 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardCapitalization
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.alorma.camperrent.screen.route.ScreenRoute
+import org.koin.compose.viewmodel.koinViewModel
 
 data object AddReservationScreenRoute : ScreenRoute {
   override val logName: String = "add_reservation"
@@ -38,13 +38,8 @@ data object AddReservationScreenRoute : ScreenRoute {
 @Composable
 fun AddReservationScreen(
   onBack: () -> Unit,
+  viewModel: AddReservationViewModel = koinViewModel(),
 ) {
-  var customerName by remember { mutableStateOf("") }
-  var checkInDate by remember { mutableStateOf("") }
-  var checkOutDate by remember { mutableStateOf("") }
-  var phone by remember { mutableStateOf("") }
-  var whatsapp by remember { mutableStateOf("") }
-  var email by remember { mutableStateOf("") }
 
   Scaffold(
     topBar = {
@@ -65,9 +60,7 @@ fun AddReservationScreen(
         modifier = Modifier
           .fillMaxWidth()
           .padding(WindowInsets.safeContent.asPaddingValues()),
-        onClick = {
-
-        },
+        onClick = { viewModel.saveReservation() },
       ) {
         Text("Save Reservation")
       }
@@ -82,43 +75,92 @@ fun AddReservationScreen(
       verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
       OutlinedTextField(
-        value = customerName,
-        onValueChange = { customerName = it },
+        modifier = Modifier.fillMaxWidth(),
         label = { Text("Customer Name") },
-        modifier = Modifier.fillMaxWidth()
+        value = viewModel.customerName,
+        onValueChange = { viewModel.onCustomerNameChange(it) },
+        keyboardOptions = KeyboardOptions(
+          capitalization = KeyboardCapitalization.Words,
+          autoCorrectEnabled = false,
+          keyboardType = KeyboardType.Text,
+          imeAction = ImeAction.Next,
+        ),
+        maxLines = 1,
+        singleLine = true,
       )
       OutlinedTextField(
-        value = checkInDate,
-        onValueChange = { checkInDate = it },
+        modifier = Modifier.fillMaxWidth(),
         label = { Text("Check-in Date (e.g., YYYY-MM-DD)") },
-        modifier = Modifier.fillMaxWidth()
+        value = viewModel.checkInDate,
+        onValueChange = { viewModel.onCheckInDateChange(it) },
+        keyboardOptions = KeyboardOptions(
+          capitalization = KeyboardCapitalization.None,
+          autoCorrectEnabled = false,
+          keyboardType = KeyboardType.Number,
+          imeAction = ImeAction.Next,
+        ),
+        maxLines = 1,
+        singleLine = true,
       )
       OutlinedTextField(
-        value = checkOutDate,
-        onValueChange = { checkOutDate = it },
+        modifier = Modifier.fillMaxWidth(),
         label = { Text("Check-out Date (e.g., YYYY-MM-DD)") },
-        modifier = Modifier.fillMaxWidth()
+        value = viewModel.checkOutDate,
+        onValueChange = { viewModel.onCheckOutDateChange(it) },
+        keyboardOptions = KeyboardOptions(
+          capitalization = KeyboardCapitalization.None,
+          autoCorrectEnabled = false,
+          keyboardType = KeyboardType.Number,
+          imeAction = ImeAction.Next,
+        ),
+        maxLines = 1,
+        singleLine = true,
       )
       OutlinedTextField(
-        value = phone,
-        onValueChange = { phone = it },
+        modifier = Modifier.fillMaxWidth(),
         label = { Text("Phone Number") },
-        modifier = Modifier.fillMaxWidth()
+        value = viewModel.phone,
+        onValueChange = { viewModel.onPhoneChange(it) },
+        keyboardOptions = KeyboardOptions(
+          capitalization = KeyboardCapitalization.None,
+          autoCorrectEnabled = false,
+          keyboardType = KeyboardType.Phone,
+          imeAction = ImeAction.Next,
+        ),
+        maxLines = 1,
+        singleLine = true,
       )
       OutlinedTextField(
-        value = whatsapp,
-        onValueChange = { whatsapp = it },
-        label = { Text("WhatsApp (Optional)") },
-        modifier = Modifier.fillMaxWidth()
+        modifier = Modifier.fillMaxWidth(),
+        label = { Text("WhatsApp") },
+        supportingText = { Text("(Optional)") },
+        value = viewModel.whatsapp,
+        onValueChange = { viewModel.onWhatsappChange(it) },
+        keyboardOptions = KeyboardOptions(
+          capitalization = KeyboardCapitalization.None,
+          autoCorrectEnabled = false,
+          keyboardType = KeyboardType.Phone,
+          imeAction = ImeAction.Next,
+        ),
+        maxLines = 1,
+        singleLine = true,
       )
       OutlinedTextField(
-        value = email,
-        onValueChange = { email = it },
+        modifier = Modifier.fillMaxWidth(),
         label = { Text("Email (Optional)") },
-        modifier = Modifier.fillMaxWidth()
+        supportingText = { Text("(Optional)") },
+        value = viewModel.email,
+        onValueChange = { viewModel.onEmailChange(it) },
+        keyboardOptions = KeyboardOptions(
+          capitalization = KeyboardCapitalization.None,
+          autoCorrectEnabled = false,
+          keyboardType = KeyboardType.Email,
+          imeAction = ImeAction.Send,
+        ),
+        keyboardActions = KeyboardActions(onSend = { viewModel.saveReservation() }),
+        maxLines = 1,
+        singleLine = true,
       )
-
-      Spacer(modifier = Modifier.height(16.dp))
     }
   }
 }

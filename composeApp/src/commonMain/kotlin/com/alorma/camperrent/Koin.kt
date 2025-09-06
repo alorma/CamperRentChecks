@@ -4,6 +4,7 @@ import androidx.room.RoomDatabase
 import com.alorma.camperrent.data.AppDatabase
 import com.alorma.camperrent.data.getRoomDatabase
 import com.alorma.camperrent.screen.home.HomeViewModel
+import com.alorma.camperrent.screen.reservation.create.AddReservationViewModel
 import org.koin.core.KoinApplication
 import org.koin.core.logger.Logger
 import org.koin.core.module.dsl.viewModelOf
@@ -20,6 +21,7 @@ val appModule = module {
   single { get<AppDatabase>().getReservationDao() }
 
   viewModelOf(::HomeViewModel)
+  viewModelOf(::AddReservationViewModel)
 }
 
 // Function to initialize Koin
