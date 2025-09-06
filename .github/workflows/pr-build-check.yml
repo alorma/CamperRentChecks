@@ -1,47 +1,27 @@
-name: Pull Request Build Check
+name: Pull request
 
 on:
   pull_request:
-    branches: [main, master]
+    branches:
+      - main
 
-env:
-  GRADLE_OPTS: -Dorg.gradle.daemon=false -Dorg.gradle.workers.max=2
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-
+  build-apps:
+    runs-on: ${{ matrix.config.os }}
     steps:
-      - name: Checkout code
+      - name: Check out code
         uses: actions/checkout@v4
 
-      - name: Set up Java 17
+      - name: Set up JDK
         uses: actions/setup-java@v4
         with:
-          java-version: '17'
-          distribution: 'temurin'
+          distribution: adopt
+          java-version: 17
 
-      - name: Setup Android SDK
-        uses: android-actions/setup-android@v3
-
-      - name: Cache Gradle dependencies
-        uses: actions/cache@v4
-        with:
-          path: |
-            ~/.gradle/caches
-            ~/.gradle/wrapper
-          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
-          restore-keys: |
-            ${{ runner.os }}-gradle-
-
-      - name: Make gradlew executable
-        run: chmod +x ./gradlew
-
-      - name: Gradle info
-        run: ./gradlew --version
-
-      - name: List available tasks
-        run: ./gradlew tasks --console=plain | head -50
-
-      - name: Build project
-        run: ./gradlew build --no-daemon --stacktrace
+      - name: Build apps
+        continue-on-error: false
+        run: ./gradlew :composeApp:assembleDebug
