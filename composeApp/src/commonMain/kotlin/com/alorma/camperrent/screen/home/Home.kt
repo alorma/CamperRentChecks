@@ -105,80 +105,26 @@ private fun ReservationCard(
       modifier = Modifier.padding(16.dp),
       verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
-      Row(
-        modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.SpaceBetween,
-        verticalAlignment = Alignment.CenterVertically
-      ) {
-        Text(
-          text = reservation.customerName,
-          style = MaterialTheme.typography.titleMedium,
-          fontWeight = FontWeight.Bold
-        )
-        StatusBadge(status = reservation.status)
-      }
-      
       Text(
-        text = reservation.vehicleModel,
-        style = MaterialTheme.typography.bodyLarge,
-        color = MaterialTheme.colorScheme.primary
+        text = reservation.customerName,
+        style = MaterialTheme.typography.titleMedium,
+        fontWeight = FontWeight.Bold
       )
       
       Row(
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceBetween
       ) {
-        Column {
-          Text(
-            text = "Check-in: ${reservation.checkInDate}",
-            style = MaterialTheme.typography.bodyMedium
-          )
-          Text(
-            text = "Check-out: ${reservation.checkOutDate}",
-            style = MaterialTheme.typography.bodyMedium
-          )
-        }
         Text(
-          text = "$${reservation.totalPrice}",
-          style = MaterialTheme.typography.titleMedium,
-          fontWeight = FontWeight.Bold,
-          color = MaterialTheme.colorScheme.secondary
+          text = "Check-in: ${reservation.checkInDate}",
+          style = MaterialTheme.typography.bodyMedium
         )
-      }
-      
-      if (reservation.notes.isNotEmpty()) {
         Text(
-          text = "Notes: ${reservation.notes}",
-          style = MaterialTheme.typography.bodySmall,
-          color = MaterialTheme.colorScheme.onSurfaceVariant
+          text = "Check-out: ${reservation.checkOutDate}",
+          style = MaterialTheme.typography.bodyMedium
         )
       }
     }
   }
 }
 
-@Composable
-private fun StatusBadge(
-  status: String,
-  modifier: Modifier = Modifier
-) {
-  val backgroundColor = when (status) {
-    "CONFIRMED" -> MaterialTheme.colorScheme.primary
-    "PENDING" -> MaterialTheme.colorScheme.tertiary
-    "COMPLETED" -> MaterialTheme.colorScheme.secondary
-    "CANCELLED" -> MaterialTheme.colorScheme.error
-    else -> MaterialTheme.colorScheme.outline
-  }
-  
-  Card(
-    modifier = modifier,
-    colors = CardDefaults.cardColors(containerColor = backgroundColor)
-  ) {
-    Text(
-      text = status,
-      modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp),
-      style = MaterialTheme.typography.labelSmall,
-      color = MaterialTheme.colorScheme.onPrimary
-    )
-  }
-}

@@ -5,7 +5,7 @@ import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.RoomDatabaseConstructor
 
-@Database(entities = [TodoEntity::class, ReservationEntity::class], version = 2)
+@Database(entities = [TodoEntity::class, ReservationEntity::class], version = 3)
 @ConstructedBy(AppDatabaseConstructor::class)
 abstract class AppDatabase : RoomDatabase() {
   abstract fun getTodoDao(): TodoDao

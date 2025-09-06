@@ -31,30 +31,18 @@ class HomeViewModel(
     val sampleReservations = listOf(
       ReservationEntity(
         customerName = "John Smith",
-        vehicleModel = "VW California",
         checkInDate = "2024-01-15",
-        checkOutDate = "2024-01-22",
-        status = "CONFIRMED",
-        totalPrice = 850.0,
-        notes = "First time customer"
+        checkOutDate = "2024-01-22"
       ),
       ReservationEntity(
         customerName = "Sarah Johnson",
-        vehicleModel = "Mercedes Marco Polo",
         checkInDate = "2024-01-20",
-        checkOutDate = "2024-01-25",
-        status = "PENDING",
-        totalPrice = 975.0,
-        notes = "Requested early check-in"
+        checkOutDate = "2024-01-25"
       ),
       ReservationEntity(
         customerName = "Mike Davis",
-        vehicleModel = "Ford Transit Custom",
         checkInDate = "2024-01-10",
-        checkOutDate = "2024-01-17",
-        status = "COMPLETED",
-        totalPrice = 720.0,
-        notes = "Excellent customer, returned clean"
+        checkOutDate = "2024-01-17"
       )
     )
     

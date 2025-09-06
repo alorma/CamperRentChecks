@@ -7,10 +7,6 @@ import androidx.room.PrimaryKey
 data class ReservationEntity(
   @PrimaryKey(autoGenerate = true) val id: Long = 0,
   val customerName: String,
-  val vehicleModel: String,
   val checkInDate: String,
-  val checkOutDate: String,
-  val status: String, // "CONFIRMED", "PENDING", "COMPLETED", "CANCELLED"
-  val totalPrice: Double,
-  val notes: String = ""
+  val checkOutDate: String
 )
