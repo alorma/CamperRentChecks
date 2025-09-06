@@ -10,5 +10,8 @@ fun getRoomDatabase(
   return builder
     .setDriver(BundledSQLiteDriver())
     .setQueryCoroutineContext(Dispatchers.IO)
+    // Add migration when needed
+    // .addMigrations(MIGRATION_1_2)
+    .fallbackToDestructiveMigration() // For development only
     .build()
 }
