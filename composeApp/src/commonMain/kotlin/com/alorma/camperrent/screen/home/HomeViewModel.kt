@@ -32,17 +32,26 @@ class HomeViewModel(
       ReservationEntity(
         customerName = "John Smith",
         checkInDate = "2024-01-15",
-        checkOutDate = "2024-01-22"
+        checkOutDate = "2024-01-22",
+        phone = "+1-555-0123",
+        whatsapp = "+1-555-0123",
+        email = "john.smith@email.com"
       ),
       ReservationEntity(
         customerName = "Sarah Johnson",
         checkInDate = "2024-01-20",
-        checkOutDate = "2024-01-25"
+        checkOutDate = "2024-01-25",
+        phone = "+1-555-0456",
+        whatsapp = "+1-555-0456",
+        email = "sarah.johnson@email.com"
       ),
       ReservationEntity(
         customerName = "Mike Davis",
         checkInDate = "2024-01-10",
-        checkOutDate = "2024-01-17"
+        checkOutDate = "2024-01-17",
+        phone = "+1-555-0789",
+        whatsapp = null,
+        email = "mike.davis@email.com"
       )
     )
     

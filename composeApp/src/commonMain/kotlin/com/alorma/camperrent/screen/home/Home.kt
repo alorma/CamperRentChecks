@@ -124,6 +124,33 @@ private fun ReservationCard(
           style = MaterialTheme.typography.bodyMedium
         )
       }
+      
+      // Contact information section
+      Column(
+        verticalArrangement = Arrangement.spacedBy(4.dp)
+      ) {
+        Text(
+          text = "📞 ${reservation.phone}",
+          style = MaterialTheme.typography.bodySmall,
+          color = MaterialTheme.colorScheme.onSurfaceVariant
+        )
+        
+        reservation.whatsapp?.let { whatsapp ->
+          Text(
+            text = "💬 $whatsapp",
+            style = MaterialTheme.typography.bodySmall,
+            color = MaterialTheme.colorScheme.onSurfaceVariant
+          )
+        }
+        
+        reservation.email?.let { email ->
+          Text(
+            text = "✉️ $email",
+            style = MaterialTheme.typography.bodySmall,
+            color = MaterialTheme.colorScheme.onSurfaceVariant
+          )
+        }
+      }
     }
   }
 }

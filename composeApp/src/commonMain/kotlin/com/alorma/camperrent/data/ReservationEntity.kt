@@ -8,5 +8,8 @@ data class ReservationEntity(
   @PrimaryKey(autoGenerate = true) val id: Long = 0,
   val customerName: String,
   val checkInDate: String,
-  val checkOutDate: String
+  val checkOutDate: String,
+  val phone: String,
+  val whatsapp: String? = null,
+  val email: String? = null
 )
