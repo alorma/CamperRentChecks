@@ -7,10 +7,10 @@ import androidx.compose.runtime.Composable
 
 class JVMPlatform : Platform {
     @Composable
-    override fun getLightColorScheme(): ColorScheme = darkColorScheme()
+    override fun getLightColorScheme(): ColorScheme = lightColorScheme()
 
     @Composable
-    override fun getDarkColorScheme(): ColorScheme = lightColorScheme()
+    override fun getDarkColorScheme(): ColorScheme = darkColorScheme()
 }
 
 actual fun getPlatform(): Platform = JVMPlatform()
