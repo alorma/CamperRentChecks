@@ -3,36 +3,38 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
-    // alias(libs.plugins.androidApplication)
+    alias(libs.plugins.androidApplication)
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
     alias(libs.plugins.composeHotReload)
-    // alias(libs.plugins.ksp)
+    alias(libs.plugins.ksp)
 }
 
 kotlin {
-    // androidTarget {
-    //     compilerOptions {
-    //         jvmTarget.set(JvmTarget.JVM_17)
-    //     }
-    // }
+    androidTarget {
+        compilerOptions {
+            jvmTarget.set(JvmTarget.JVM_17)
+        }
+    }
     
     jvm()
     
     sourceSets {
-        // androidMain.dependencies {
-        //     implementation(compose.preview)
-        //     implementation(libs.androidx.activity.compose)
-        // }
+        androidMain.dependencies {
+            implementation(compose.preview)
+            implementation(libs.androidx.activity.compose)
+        }
         commonMain.dependencies {
             implementation(compose.runtime)
             implementation(compose.foundation)
-            implementation(libs.compose.material3.expressive)
+            implementation(compose.material3)
             implementation(compose.ui)
             implementation(compose.components.resources)
             implementation(compose.components.uiToolingPreview)
-            implementation(libs.androidx.lifecycle.viewmodelCompose)
-            implementation(libs.androidx.lifecycle.runtimeCompose)
+            
+            // Room dependencies
+            implementation(libs.room.runtime)
+            implementation(libs.sqlite.bundled)
         }
         jvmMain.dependencies {
             implementation(compose.desktop.currentOs)
@@ -41,36 +43,37 @@ kotlin {
     }
 }
 
-// android {
-//     namespace = "com.alorma.camperrent"
-//     compileSdk = libs.versions.android.compileSdk.get().toInt()
-// 
-//     defaultConfig {
-//         applicationId = "com.alorma.camperrent"
-//         minSdk = libs.versions.android.minSdk.get().toInt()
-//         targetSdk = libs.versions.android.targetSdk.get().toInt()
-//         versionCode = 1
-//         versionName = "1.0"
-//     }
-//     packaging {
-//         resources {
-//             excludes += "/META-INF/{AL2.0,LGPL2.1}"
-//         }
-//     }
-//     buildTypes {
-//         getByName("release") {
-//             isMinifyEnabled = false
-//         }
-//     }
-//     compileOptions {
-//         sourceCompatibility = JavaVersion.VERSION_17
-//         targetCompatibility = JavaVersion.VERSION_17
-//     }
-// }
+android {
+    namespace = "com.alorma.camperrent"
+    compileSdk = libs.versions.android.compileSdk.get().toInt()
 
-// dependencies {
-//     debugImplementation(compose.uiTooling)
-// }
+    defaultConfig {
+        applicationId = "com.alorma.camperrent"
+        minSdk = libs.versions.android.minSdk.get().toInt()
+        targetSdk = libs.versions.android.targetSdk.get().toInt()
+        versionCode = 1
+        versionName = "1.0"
+    }
+    packaging {
+        resources {
+            excludes += "/META-INF/{AL2.0,LGPL2.1}"
+        }
+    }
+    buildTypes {
+        getByName("release") {
+            isMinifyEnabled = false
+        }
+    }
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
+    }
+}
+
+dependencies {
+    debugImplementation(compose.uiTooling)
+    add("kspCommonMainMetadata", libs.room.compiler)
+}
 
 compose.desktop {
     application {
@@ -82,4 +85,15 @@ compose.desktop {
             packageVersion = "1.0.0"
         }
     }
+}
+
+// KSP configuration for Room
+tasks.withType<org.jetbrains.kotlin.gradle.dsl.KotlinCompile<*>>().configureEach {
+    if (name != "kspCommonMainKotlinMetadata") {
+        dependsOn("kspCommonMainKotlinMetadata")
+    }
+}
+
+kotlin.sourceSets.commonMain {
+    kotlin.srcDir("build/generated/ksp/metadata/commonMain/kotlin")
 }
