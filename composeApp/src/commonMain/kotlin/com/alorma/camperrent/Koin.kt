@@ -1,17 +1,18 @@
 package com.alorma.camperrent
 
 import org.koin.core.context.startKoin
+import org.koin.core.logger.Logger
+import org.koin.dsl.bind
 import org.koin.dsl.module
 
 // Define your Koin module
 val appModule = module {
-    // Add your dependencies here later
-    // Example: single<MyRepository> { MyRepositoryImpl() }
+  factory { getPlatform().koinLogger() } bind Logger::class
 }
 
 // Function to initialize Koin
 fun initKoin() {
-    startKoin {
-        modules(appModule)
-    }
+  startKoin {
+    modules(appModule)
+  }
 }
