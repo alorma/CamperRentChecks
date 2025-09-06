@@ -32,6 +32,7 @@ kotlin {
             implementation(compose.foundation)
             implementation(libs.compose.material3.expressive)
             implementation(compose.ui)
+            implementation(compose.materialIconsExtended)
             implementation(compose.components.resources)
             implementation(compose.components.uiToolingPreview)
 

@@ -8,6 +8,8 @@ import androidx.navigation3.runtime.NavEntry
 import androidx.navigation3.ui.NavDisplay
 import com.alorma.camperrent.screen.home.HomeScreen
 import com.alorma.camperrent.screen.home.HomeScreenRoute
+import com.alorma.camperrent.screen.reservation.create.AddReservationScreen
+import com.alorma.camperrent.screen.reservation.create.AddReservationScreenRoute
 import com.alorma.camperrent.screen.route.ScreenRoute
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.KoinMultiplatformApplication
@@ -36,7 +38,15 @@ fun App() {
           logger.debug(route.logName)
           when (route) {
             is HomeScreenRoute -> NavEntry(route) {
-              HomeScreen()
+              HomeScreen(
+                onAddReservationClick = { backStack.add(AddReservationScreenRoute) },
+              )
+            }
+
+            is AddReservationScreenRoute -> NavEntry(route) {
+              AddReservationScreen(
+                onBack = { backStack.removeLastOrNull() },
+              )
             }
 
             else -> throw IllegalArgumentException("Unknown route: $route")

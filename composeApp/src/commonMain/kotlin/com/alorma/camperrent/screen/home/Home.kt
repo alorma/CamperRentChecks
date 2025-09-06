@@ -9,12 +9,16 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularWavyProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -40,6 +44,7 @@ data object HomeScreenRoute : ScreenRoute {
 @Composable
 fun HomeScreen(
   viewModel: HomeViewModel = koinViewModel(),
+  onAddReservationClick: () -> Unit,
 ) {
   Scaffold(
     topBar = {
@@ -47,7 +52,11 @@ fun HomeScreen(
         title = { Text(text = "Camper Reservations") },
       )
     },
-    floatingActionButton = {},
+    floatingActionButton = {
+      FloatingActionButton(onClick = onAddReservationClick) {
+        Icon(Icons.Filled.Add, contentDescription = "Add Reservation")
+      }
+    },
   ) { paddingValues ->
     val uiState = viewModel.uiState.collectAsState()
 
@@ -154,4 +163,3 @@ private fun ReservationCard(
     }
   }
 }
-
