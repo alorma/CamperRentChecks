@@ -4,6 +4,9 @@ import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
+import org.koin.android.logger.AndroidLogger
+import org.koin.core.logger.Level
+import org.koin.core.logger.Logger
 
 class AndroidPlatform : Platform {
   @Composable
@@ -17,6 +20,8 @@ class AndroidPlatform : Platform {
     val context = LocalContext.current
     return dynamicDarkColorScheme(context)
   }
+
+  override fun koinLogger(): Logger = AndroidLogger(level = Level.DEBUG)
 }
 
 actual fun getPlatform(): Platform = AndroidPlatform()
