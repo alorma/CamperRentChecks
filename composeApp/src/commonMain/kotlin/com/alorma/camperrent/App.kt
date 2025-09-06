@@ -38,9 +38,8 @@ fun App() {
         onBack = { backStack.removeLastOrNull() },
         entryProvider = { route ->
           logger.debug(route.logName)
-
           when (route) {
-            HomeScreenRoute -> NavEntry(route) {
+            is HomeScreenRoute -> NavEntry(route) {
               Scaffold { paddingValues ->
                 Box(
                   modifier = Modifier.fillMaxSize().padding(paddingValues),

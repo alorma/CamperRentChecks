@@ -13,12 +13,14 @@ fun AppTheme(
   content: @Composable () -> Unit,
 ) {
 
+  val colors = if (isSystemInDark) {
+    getPlatform().getDarkColorScheme()
+  } else {
+    getPlatform().getLightColorScheme()
+  }
+
   MaterialExpressiveTheme(
-    colorScheme = if (isSystemInDark) {
-      getPlatform().getDarkColorScheme()
-    } else {
-      getPlatform().getLightColorScheme()
-    },
+    colorScheme = colors,
     motionScheme = MotionScheme.expressive(),
     content = content,
   )
