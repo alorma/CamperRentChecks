@@ -1,4 +1,3 @@
-import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
@@ -8,6 +7,7 @@ plugins {
     alias(libs.plugins.composeCompiler)
     alias(libs.plugins.composeHotReload)
     alias(libs.plugins.ksp)
+    alias(libs.plugins.androidx.room)
 }
 
 kotlin {
@@ -25,6 +25,8 @@ kotlin {
             implementation(libs.androidx.activity.compose)
             implementation(libs.koin.android)
             implementation(libs.koin.androidx.compose)
+
+            implementation(libs.androidx.room.sqlite.wrapper)
         }
 
         commonMain.dependencies {
@@ -45,11 +47,7 @@ kotlin {
             implementation(libs.androidx.navigation3.ui)
 
             implementation(libs.androidx.room.runtime)
-        }
-
-        jvmMain.dependencies {
-            implementation(compose.desktop.currentOs)
-            implementation(libs.kotlinx.coroutinesSwing)
+            implementation(libs.androidx.sqlite.bundled)
         }
     }
 }
@@ -81,9 +79,12 @@ android {
     }
 }
 
+room {
+    schemaDirectory("$projectDir/schemas")
+}
+
 dependencies {
     debugImplementation(compose.uiTooling)
     add("kspCommonMainMetadata", libs.androidx.room.compiler)
     add("kspAndroid", libs.androidx.room.compiler)
-    add("kspJvm", libs.androidx.room.compiler)
 }
