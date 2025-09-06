@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "5ffb3413cf3188dc52d5a88e32808d5a",
+    "identityHash": "007c0b99a6ba80ff1fca6e0280108442",
     "entities": [
       {
-        "tableName": "TodoEntity",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `title` TEXT NOT NULL, `content` TEXT NOT NULL)",
+        "tableName": "ReservationEntity",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `customerName` TEXT NOT NULL, `checkInDate` TEXT NOT NULL, `checkOutDate` TEXT NOT NULL, `phone` TEXT NOT NULL, `whatsapp` TEXT, `email` TEXT)",
         "fields": [
           {
             "fieldPath": "id",
@@ -15,16 +15,38 @@
             "notNull": true
           },
           {
-            "fieldPath": "title",
-            "columnName": "title",
+            "fieldPath": "customerName",
+            "columnName": "customerName",
             "affinity": "TEXT",
             "notNull": true
           },
           {
-            "fieldPath": "content",
-            "columnName": "content",
+            "fieldPath": "checkInDate",
+            "columnName": "checkInDate",
             "affinity": "TEXT",
             "notNull": true
+          },
+          {
+            "fieldPath": "checkOutDate",
+            "columnName": "checkOutDate",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "phone",
+            "columnName": "phone",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "whatsapp",
+            "columnName": "whatsapp",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "email",
+            "columnName": "email",
+            "affinity": "TEXT"
           }
         ],
         "primaryKey": {
@@ -37,7 +59,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '5ffb3413cf3188dc52d5a88e32808d5a')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '007c0b99a6ba80ff1fca6e0280108442')"
     ]
   }
 }

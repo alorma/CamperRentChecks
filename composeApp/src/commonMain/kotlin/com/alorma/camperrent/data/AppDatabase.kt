@@ -5,10 +5,14 @@ import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.RoomDatabaseConstructor
 
-@Database(entities = [TodoEntity::class, ReservationEntity::class], version = 4)
+@Database(
+  entities = [
+    ReservationEntity::class,
+  ],
+  version = 1,
+)
 @ConstructedBy(AppDatabaseConstructor::class)
 abstract class AppDatabase : RoomDatabase() {
-  abstract fun getTodoDao(): TodoDao
   abstract fun getReservationDao(): ReservationDao
 }
 
