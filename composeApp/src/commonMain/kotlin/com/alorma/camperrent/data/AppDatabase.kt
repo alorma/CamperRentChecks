@@ -8,7 +8,7 @@ import androidx.room.RoomDatabaseConstructor
 @Database(entities = [TodoEntity::class], version = 1)
 @ConstructedBy(AppDatabaseConstructor::class)
 abstract class AppDatabase : RoomDatabase() {
-  abstract fun getDao(): TodoDao
+  abstract fun getTodoDao(): TodoDao
 }
 
 // The Room compiler generates the `actual` implementations.

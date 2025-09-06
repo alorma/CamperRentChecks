@@ -1,7 +1,6 @@
 package com.alorma.camperrent
 
 import androidx.compose.material3.ColorScheme
-import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
@@ -28,7 +27,7 @@ class JVMPlatform : Platform {
 
 actual fun getPlatform(): Platform = JVMPlatform()
 
-class JVMPlatformModule: PlatformModule {
+class JVMPlatformModule : PlatformModule {
   override fun getModule(): Module = module {
     factory { getDatabaseBuilder() }
   }

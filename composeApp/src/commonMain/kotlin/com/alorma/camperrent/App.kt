@@ -10,16 +10,18 @@ import com.alorma.camperrent.screen.home.HomeScreen
 import com.alorma.camperrent.screen.home.HomeScreenRoute
 import com.alorma.camperrent.screen.route.ScreenRoute
 import org.jetbrains.compose.ui.tooling.preview.Preview
-import org.koin.compose.KoinApplication
+import org.koin.compose.KoinMultiplatformApplication
 import org.koin.compose.koinInject
+import org.koin.core.annotation.KoinExperimentalAPI
 import org.koin.core.logger.Logger
+import org.koin.dsl.KoinConfiguration
 
-@OptIn(ExperimentalMaterial3ExpressiveApi::class)
+@OptIn(ExperimentalMaterial3ExpressiveApi::class, KoinExperimentalAPI::class)
 @Composable
 @Preview
 fun App() {
-  KoinApplication(
-    application = { initKoin() }
+  KoinMultiplatformApplication(
+    config = KoinConfiguration { initKoin() },
   ) {
     AppTheme {
 
